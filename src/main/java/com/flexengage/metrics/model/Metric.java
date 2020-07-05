@@ -22,6 +22,6 @@ public class Metric {
     @GeneratedValue
     private UUID uuid;
     private String name;
-    @Column(columnDefinition = "DECIMAL(65535, 5)", scale = 5)
+    @Column(columnDefinition = "DECIMAL(65535, 5)")
     private BigDecimal value;
 }

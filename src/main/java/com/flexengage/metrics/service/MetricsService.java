@@ -17,9 +17,10 @@ import java.util.stream.Collectors;
 public class MetricsService {
 
     @Inject MetricRepository metricRepository;
+
     private final String VALID_NAME = "^[a-zA-Z0-9_-]*$";
 
-    public Metric createMetric(Metric metric){
+    public Metric  createMetric(Metric metric){
         validateCreateMetric(metric);
         return metricRepository.save(metric);
     }
@@ -32,10 +33,7 @@ public class MetricsService {
     public MetricSummary getMetricSummary(String name){
         validateGetSummary(name);
         List<Metric> metrics = metricRepository.findAllByName(name);
-        boolean hasNoMetrics = metrics.size() == 0;
-        //Return empty summary if no metric data
-        return hasNoMetrics ? MetricSummary.builder().build()
-                : MetricSummary.builder()
+        return MetricSummary.builder()
                 .name(name)
                 .median(calculateMedian(metrics))
                 .mean(calculateMean(metrics))
@@ -80,13 +78,17 @@ public class MetricsService {
             throw new BadRequestException("Metric name is required to get a summary.");
         }
 
+        if(!metricRepository.existsByName(name)){
+            throw new BadRequestException("Metric must exist to get summary.");
+        }
+
         validateNameIsValidString(name);
     }
 
     private void validateNameIsValidString(String name){
         if(!name.matches(VALID_NAME)){
             throw new BadRequestException("Metric name is not a valid string. " +
-                    "Only characters, numbers, dashes, and underscores allowed");
+                    "Only characters, numbers, dashes, and underscores are allowed");
         }
     }
 

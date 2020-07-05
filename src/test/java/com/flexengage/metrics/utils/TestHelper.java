@@ -25,7 +25,7 @@ public class TestHelper {
     public static final BigDecimal METRIC_VALUE_3 = BigDecimal.valueOf(-3);
     public static final BigDecimal METRIC_VALUE_4 = BigDecimal.valueOf(4.25);
     public static final BigDecimal METRIC_VALUE_5 = BigDecimal.valueOf(874.50);
-    public static final BigDecimal METRIC_VALUE_6 = BigDecimal.valueOf(100.500000000000);
+    public static final BigDecimal METRIC_VALUE_6 = BigDecimal.valueOf(100.5000000);
     public static final BigDecimal METRIC_VALUE_7 = BigDecimal.valueOf(407);
     public static final BigDecimal METRIC_VALUE_8 = BigDecimal.valueOf(-34.343434);
     public static final BigDecimal METRIC_VALUE_9 = BigDecimal.valueOf(87539754);

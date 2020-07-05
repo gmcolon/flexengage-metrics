@@ -7,7 +7,6 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 @SpringBootApplication
 public class MetricsApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(MetricsApplication.class, args);
 	}

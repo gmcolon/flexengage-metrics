@@ -7,6 +7,7 @@ import com.flexengage.metrics.repository.MetricRepository;
 import com.flexengage.metrics.utils.TestHelper;
 import com.jayway.jsonpath.JsonPath;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,6 +33,11 @@ public class MetricsControllerTest {
     @Inject private MetricRepository metricRepository;
     private static ObjectMapper jsonMapper = new ObjectMapper();
 
+    @BeforeEach
+    public void cleaUp(){
+        metricRepository.deleteAll();
+    }
+
     //************************************************
     //** CREATE METRICS
     //************************************************
@@ -54,6 +60,7 @@ public class MetricsControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Name is required to create a new metric."))
                 .andReturn();
+        TestHelper.METRIC_INVALID.setName(TestHelper.METRIC_NAME_INVALID);
     }
 
     @Test
@@ -65,6 +72,7 @@ public class MetricsControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Metric name is the only allowed property for a new metric."))
                 .andReturn();
+        TestHelper.METRIC_INVALID.setUuid(null);
     }
 
     @Test
@@ -74,7 +82,7 @@ public class MetricsControllerTest {
                 .content(jsonMapper.writeValueAsString(TestHelper.METRIC_INVALID)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Metric name is not a valid string. " +
-                        "Only characters, numbers, dashes, and underscores allowed"))
+                        "Only characters, numbers, dashes, and underscores are allowed"))
                 .andReturn();
     }
 
